@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Deposit | NuelPay</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f7f9fc;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e8edf4;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 7%;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: #26354b;
+            text-decoration: none;
+            font-size: 25px;
+        }
+
+        .back-btn:hover {
+            background: #edf4ff;
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .brand span {
+            color: #2563eb;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+            margin: 40px auto;
+            padding: 0 22px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 27px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111b2e;
+        }
+
+        .heading p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #718096;
+        }
+
+        .demo-notice {
+            background: #fff8e7;
+            border: 1px solid #f6df9d;
+            color: #795b15;
+            border-radius: 10px;
+            padding: 13px 15px;
+            font-size: 11px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .demo-notice strong {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid #e6ebf2;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 30px rgba(20, 42, 80, 0.04);
+        }
+
+        .amount-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f2f6ff;
+            border: 1px solid #e0eaff;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+
+        .amount-box p {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .amount-box h2 {
+            color: #1d4ed8;
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .amount-box small {
+            font-size: 10px;
+            color: #718096;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 9px;
+            color: #344054;
+        }
+
+        .field select,
+        .field input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid #d9e0ea;
+            border-radius: 8px;
+            padding: 0 13px;
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+            color: #26354b;
+            background: white;
+        }
+
+        .field select:focus,
+        .field input:focus {
+            border-color: #3977f6;
+            box-shadow: 0 0 0 3px rgba(57, 119, 246, 0.1);
+        }
+
+        .coin-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coin-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .coin-icon.usdt {
+            background: #e0f7ee;
+            color: #15966b;
+        }
+
+        .coin-icon.eth {
+            background: #edf0ff;
+            color: #5264c9;
+        }
+
+        .coin-icon.sol {
+            background: #eee8ff;
+            color: #7445c4;
+        }
+
+        .coin-icon.trx {
+            background: #ffebeb;
+            color: #d83b47;
+        }
+
+        .coin-select {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px;
+            border: 1px solid #e5eaf2;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .coin-select.active {
+            border-color: #2563eb;
+            background: #f5f8ff;
+        }
+
+        .coin-info {
+            flex: 1;
+        }
+
+        .coin-info strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .coin-info small {
+            color: #8792a3;
+            font-size: 10px;
+        }
+
+        .coin-select input {
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
+        }
+
+        .wallet-box {
+            background: #f7f9fc;
+            border: 1px solid #e6ebf2;
+            border-radius: 12px;
+            padding: 17px;
+            margin: 22px 0;
+        }
+
+        .wallet-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .wallet-heading h3 {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .demo-tag {
+            background: #e8f1ff;
+            color: #2563eb;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 5px 8px;
+            border-radius: 5px;
+        }
+
+        .qr-placeholder {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 16px;
+            background: white;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 12px;
+            color: #718096;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .wallet-address {
+            font-size: 11px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+            background: white;
+            border: 1px solid #e1e7f0;
+            border-radius: 8px;
+            padding: 12px;
+            color: #475569;
+            margin-bottom: 12px;
+        }
+
+        .copy-btn {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+            background: white;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: #f0f5ff;
+        }
+
+        .warning {
+            background: #fff8e7;
+            border-left: 3px solid #f0b429;
+            padding: 12px;
+            font-size: 10px;
+            color: #795b15;
+            line-height: 1.8;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .continue-btn {
+            width: 100%;
+            height: 51px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .continue-btn:hover {
+            background: #174ac4;
+        }
+
+        .cancel-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 17px;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            padding: 28px 10px 10px;
+        }
+
+        .result-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #e8f2ff;
+            color: #2563eb;
+            display: grid;
+            place-items: center;
+            font-size: 30px;
+        }
+
+        .result h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .result button {
+            width: 100%;
+            height: 48px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer {
+            text-align: center;
+            color: #9aa4b2;
+            font-size: 10px;
+            margin: 25px 0;
+        }
+
+        @media (max-width: 480px) {
+            .topbar {
+                height: 62px;
+                padding: 0 18px;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 0 16px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+
+            .form-card {
+                padding: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="javascript:history.back()" class="back-btn"
+       aria-label="Go back">&larr;</a>
+    <div class="brand">Nuel<span>Pay</span></div>
+</header>
+
+<main class="container">
+
+    <div class="heading">
+        <h1>Crypto deposit</h1>
+        <p>Choose your cryptocurrency and network to view the demo deposit details.</p>
+    </div>
+
+    <div class="demo-notice">
+        <strong>Portfolio demonstration only</strong>
+        These are simulated deposit details. No real cryptocurrency
+        wallet or blockchain transaction is connected to this page.
+    </div>
+
+    <section class="form-card">
+
+        <div id="cryptoForm">
+
+            <div class="amount-box">
+                <div>
+                    <p>Deposit amount selected</p>
+                    <h2 id="depositAmount">₦0.00</h2>
+                </div>
+                <small>DEMO</small>
+            </div>
+
+            <div class="field">
+                <label>Select cryptocurrency</label>
+            </div>
+
+            <label class="coin-select active">
+                <span class="coin-icon usdt">₮</span>
+                <span class="coin-info">
+                    <strong>Tether (USDT)</strong>
+                    <small>USD-pegged stablecoin</small>
+                </span>
+                <input type="radio" name="coin" value="USDT" checked>
+            </label>
+
+            <label class="coin-select">
+                <span class="coin-icon eth">◆</span>
+                <span class="coin-info">
+                    <strong>Ethereum (ETH)</strong>
+                    <small>Ethereum network</small>
+                </span>
+                <input type="radio" name="coin" value="ETH">
+            </label>
+
+            <label class="coin-select">
+                <span class="coin-icon sol">S</span>
+                <span class="coin-info">
+                    <strong>Solana (SOL)</strong>
+                    <small>Solana network</small>
+                </span>
+                <input type="radio" name="coin" value="SOL">
+            </label>
+
+            <label class="coin-select">
+                <span class="coin-icon trx">₮</span>
+                <span class="coin-info">
+                    <strong>Tron (TRX)</strong>
+                    <small>Tron network</small>
+                </span>
+                <input type="radio" name="coin" value="TRX">
+            </label>
+
+            <div class="field" style="margin-top:24px;">
+                <label for="network">Select network</label>
+                <select id="network">
+                    <option value="TRC20">TRON (TRC20) — Demo</option>
+                    <option value="ERC20">Ethereum (ERC20) — Demo</option>
+                    <option value="SOLANA">Solana — Demo</option>
+                </select>
+            </div>
+
+            <div class="wallet-box">
+                <div class="wallet-heading">
+                    <h3>Demo deposit address</h3>
+                    <span class="demo-tag">NOT REAL</span>
+                </div>
+
+                <div class="qr-placeholder">
+                    QR code preview<br>
+                    Demo only — no wallet
+                </div>
+
+                <div class="wallet-address" id="walletAddress">
+                    DEMO-ONLY-NOT-A-REAL-WALLET
+                </div>
+
+                <button type="button" class="copy-btn" id="copyBtn">
+                    Copy demo address
+                </button>
+            </div>
+
+            <div class="warning">
+                ⚠️ Never send real crypto to this demo address. It is not
+                a valid receiving wallet. Network selection here is for
+                interface demonstration only.
+            </div>
+
+            <button type="button" class="continue-btn" id="submitBtn">
+                I've Made the Transfer
+            </button>
+
+            <a href="dashboard.html" class="cancel-btn">
+                Cancel and return to dashboard
+            </a>
+
+        </div>
+
+        <div class="result" id="result">
+            <div class="result-icon">✓</div>
+
+            <h2>Demo request created!</h2>
+
+            <p>
+                Your simulated crypto deposit request has been created.<br>
+                <strong>Status: Pending demo</strong><br><br>
+                No blockchain transaction was made, and your NuelPay
+                balance has not changed.
+            </p>
+
+            <button onclick="goToDashboard()">Return to dashboard</button>
+        </div>
+
+    </section>
+
+    <div class="footer">© 2026 NuelPay · Portfolio Demo</div>
+
+</main>
+
+<script>
+    const amount = Number(localStorage.getItem("depositAmount") || 0);
+
+    document.getElementById("depositAmount").textContent =
+        "₦" + amount.toLocaleString("en-NG", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    const network = document.getElementById("network");
+    const coinRadios = document.querySelectorAll('input[name="coin"]');
+    const coinCards = document.querySelectorAll(".coin-select");
+
+    function updateNetworks() {
+        const selectedCoin = document.querySelector('input[name="coin"]:checked').value;
+
+        coinCards.forEach(card => {
+            card.classList.toggle(
+                "active",
+                card.querySelector("input").checked
+            );
+        });
+
+        if (selectedCoin === "USDT") {
+            network.innerHTML = `
+                <option value="TRC20">TRON (TRC20) — Demo</option>
+                <option value="ERC20">Ethereum (ERC20) — Demo</option>
+            `;
+        } else if (selectedCoin === "ETH") {
+            network.innerHTML = `
+                <option value="ERC20">Ethereum (ERC20) — Demo</option>
+            `;
+        } else if (selectedCoin === "SOL") {
+            network.innerHTML = `
+                <option value="SOLANA">Solana — Demo</option>
+            `;
+        } else {
+            network.innerHTML = `
+                <option value="TRC20">TRON (TRC20) — Demo</option>
+            `;
+        }
+
+        document.getElementById("walletAddress").textContent =
+            "DEMO-ONLY-NOT-A-REAL-WALLET";
+    }
+
+    coinRadios.forEach(radio => {
+        radio.addEventListener("change", updateNetworks);
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+        const address = document.getElementById("walletAddress").textContent;
+
+        try {
+            await navigator.clipboard.writeText(address);
+            document.getElementById("copyBtn").textContent = "Demo address copied!";
+        } catch (error) {
+            alert("Demo address: " + address);
+        }
+    });
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+        document.getElementById("cryptoForm").style.display = "none";
+        document.getElementById("result").style.display = "block";
+    });
+
+    function goToDashboard() {
+        window.location.href = "dashboard.html";
+    }
+</script>
+
+</body>
+</html>
